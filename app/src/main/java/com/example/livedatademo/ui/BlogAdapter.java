@@ -28,7 +28,7 @@ public class BlogAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(BaseViewHolder holder, int position) {\
+    public void onBindViewHolder(BaseViewHolder holder, int position) {
         holder.onBind(position);
     }
 
@@ -87,7 +87,31 @@ public class BlogAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 Glide.with(itemView.getContext()).load(mBlog.getThumbnail()).into(ivThumbnail);
             }
 
-            
+            if (mBlog.getTitle() != null ) {
+                tvTitle.setText(mBlog.getTitle());
+            }
+
+            if (mBlog.getLink() != null) {
+                tvLink.setText(mBlog.getLink());
+            }
+
+            if (mBlog.getDescription() != null) {
+                tvDescription.setText(mBlog.getDescription());
+            }
+
+            tvLink.setOnClickListener(v -> {
+                if (mBlog.getLink() != null) {
+                    try {
+                        Intent intent = new Intent();
+                        intent.setAction(Intent.ACTION_VIEW);
+                        intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                        intent.setData(Uri.parse(mBlog.getLink()));
+                        itemView.getContext().startActivity(intent);
+                    } catch (Exception e) {
+                        Log.e(TAG, "onClick: Image url is incorrect");
+                    }
+                }
+            });
         }
     }
 
